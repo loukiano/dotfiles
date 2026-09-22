@@ -1,0 +1,56 @@
+# ~/.zshrc, managed by chezmoi. Edit with `chezmoi edit ~/.zshrc`, then `chezmoi apply`.
+
+# --- Powerlevel10k instant prompt (must stay near the top) -------------------
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# --- PATH --------------------------------------------------------------------
+# Homebrew (Apple Silicon). Skipped if brew is already on PATH (e.g. from ~/.zprofile).
+if [[ -x /opt/homebrew/bin/brew ]] && ! command -v brew >/dev/null; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+# Per-user tools (chezmoi, mise) install into ~/.local/bin.
+export PATH="$HOME/.local/bin:$PATH"
+
+# --- oh-my-zsh ---------------------------------------------------------------
+export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME="powerlevel10k/powerlevel10k"
+COMPLETION_WAITING_DOTS="true"
+plugins=(git wd docker zsh-syntax-highlighting virtualenv)
+source $ZSH/oh-my-zsh.sh
+
+# --- Prompt ------------------------------------------------------------------
+# p10k settings live in ~/.p10k.zsh (run `p10k configure` to change them).
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# --- Node via nvm (legacy; remove once node is managed by mise) --------------
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+# --- mise (runtime versions) -------------------------------------------------
+# Last on purpose: tools mise manages take priority over anything above.
+if [[ -x "$HOME/.local/bin/mise" ]]; then
+  eval "$("$HOME/.local/bin/mise" activate zsh)"
+fi
+
+# --- Dotfiles freshness check ------------------------------------------------
+# chezmoi has no auto-pull. Instead: at most once a day, fetch the dotfiles repo
+# in the background (never applies anything). If another account/machine has
+# pushed changes, print a one-line reminder before the next prompt.
+_dotfiles_check() {
+  add-zsh-hook -d precmd _dotfiles_check    # run once per shell
+  local src="$HOME/.local/share/chezmoi" stamp="$HOME/.cache/dotfiles-fetch-stamp"
+  [[ -d $src/.git ]] || return
+  if [[ ! -f $stamp || -n $(find "$stamp" -mmin +1440 2>/dev/null) ]]; then
+    mkdir -p "${stamp:h}" && touch "$stamp"
+    ( GIT_TERMINAL_PROMPT=0 GIT_SSH_COMMAND="ssh -o BatchMode=yes" \
+        git -C "$src" fetch --quiet >/dev/null 2>&1 & )
+  fi
+  local behind
+  behind=$(git -C "$src" rev-list --count HEAD..@{upstream} 2>/dev/null) || return
+  (( behind > 0 )) && print -P "%F{yellow}dotfiles: ${behind} new commit(s) on GitHub, run 'chezmoi update'%f"
+}
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd _dotfiles_check

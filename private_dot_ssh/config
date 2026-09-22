@@ -1,0 +1,8 @@
+# Machine-specific hosts (servers, IPs, work hosts) go in ~/.ssh/config.local,
+# which is NOT in this repo, so they never end up on public GitHub.
+# `Include` must come before any Host block.
+Include ~/.ssh/config.local
+
+Host github.com
+  AddKeysToAgent yes
+  IdentityFile ~/.ssh/id_ed25519

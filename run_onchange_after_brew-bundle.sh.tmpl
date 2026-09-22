@@ -1,0 +1,9 @@
+{{ if .brewOwner -}}
+#!/bin/bash
+# "run_onchange_" = chezmoi re-runs this whenever its contents change.
+# The hash line below changes whenever the Brewfile changes, so editing the
+# Brewfile is what triggers a re-run. "after_" = runs after files are written.
+# Brewfile hash: {{ include "dot_Brewfile" | sha256sum }}
+set -euo pipefail
+/opt/homebrew/bin/brew bundle --global
+{{ end -}}

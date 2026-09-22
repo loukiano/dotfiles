@@ -1,0 +1,7 @@
+# Global tool versions for this account (~/.config/mise/config.toml).
+# Projects override these with their own mise.toml.
+# Add tools with `mise use -g <tool>@<version>`, then `chezmoi re-add` to save here.
+
+[tools]
+# node = "lts"      # uncomment when moving off nvm
+# uv = "latest"     # Python: mise installs uv; uv manages Python versions + venvs

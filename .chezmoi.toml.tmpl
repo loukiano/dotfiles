@@ -1,0 +1,18 @@
+{{- /*
+  Runs at `chezmoi init`, once per account. The answers are saved to
+  ~/.config/chezmoi/chezmoi.toml and are not asked again (that's the "Once").
+  Every other template in this repo can read them as .profile, .email, .brewOwner.
+*/ -}}
+{{- $profile := promptChoiceOnce . "profile" "Which account is this" (list "personal" "work" "admin") -}}
+{{- $email := promptStringOnce . "email" "Git email for this account" -}}
+{{- $brewOwner := promptBoolOnce . "brewOwner" "Does this account own Homebrew on this machine (y/n)" -}}
+
+[data]
+    profile = {{ $profile | quote }}
+    email = {{ $email | quote }}
+    brewOwner = {{ $brewOwner }}
+
+[git]
+    # Every change chezmoi makes to the repo (add, edit, re-add) is committed automatically.
+    # Pushing stays manual (`chezmoi cd && git push`), so you review before it goes public.
+    autoCommit = true

@@ -1,0 +1,9 @@
+# Paths listed here exist in the repo but are NOT written to your home folder.
+# This file is itself a template, so entries can depend on the profile.
+
+README.md
+
+{{ if not .brewOwner }}
+# Only the account that owns Homebrew gets the Brewfile.
+.Brewfile
+{{ end }}

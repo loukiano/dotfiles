@@ -1,0 +1,14 @@
+[user]
+	name = loukiano
+	email = {{ .email }}
+[alias]
+	co = checkout
+	ci = commit
+	ciam = !git add -A && git commit -m
+	s = status
+	last = log -1 HEAD
+	unstage = reset HEAD --
+	cob = checkout -b
+{{- if eq .profile "work" }}
+# Work-only git settings go here (e.g. a signing key, or url rewrites for the company's host).
+{{- end }}

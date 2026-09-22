@@ -1,0 +1,28 @@
+{{- /*
+  Things chezmoi downloads rather than stores: oh-my-zsh, the powerlevel10k theme,
+  and the zsh-syntax-highlighting plugin (all used by .zshrc).
+
+  Each block only appears when that folder is MISSING, so on a machine that already
+  has them (like the Mac Studio) chezmoi leaves them completely alone, and on a new
+  account it clones them once. oh-my-zsh updates itself after that.
+*/ -}}
+{{ if not (stat (joinPath .chezmoi.homeDir ".oh-my-zsh")) -}}
+[".oh-my-zsh"]
+    type = "git-repo"
+    url = "https://github.com/ohmyzsh/ohmyzsh.git"
+    clone.args = ["--depth", "1"]
+{{ end -}}
+
+{{ if not (stat (joinPath .chezmoi.homeDir ".oh-my-zsh/custom/themes/powerlevel10k")) -}}
+[".oh-my-zsh/custom/themes/powerlevel10k"]
+    type = "git-repo"
+    url = "https://github.com/romkatv/powerlevel10k.git"
+    clone.args = ["--depth", "1"]
+{{ end -}}
+
+{{ if not (stat (joinPath .chezmoi.homeDir ".oh-my-zsh/custom/plugins/zsh-syntax-highlighting")) -}}
+[".oh-my-zsh/custom/plugins/zsh-syntax-highlighting"]
+    type = "git-repo"
+    url = "https://github.com/zsh-users/zsh-syntax-highlighting.git"
+    clone.args = ["--depth", "1"]
+{{ end -}}

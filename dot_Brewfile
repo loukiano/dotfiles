@@ -1,0 +1,24 @@
+# ~/.Brewfile: Homebrew packages for the account that owns Homebrew (brewOwner = true).
+# chezmoi runs `brew bundle --global` whenever this file changes.
+# Removing a line here does NOT uninstall anything; it just stops new machines getting it.
+#
+# Rule: only tools either account would install on a fresh Mac. Language runtimes
+# (node, go, python) come from mise/uv per account instead.
+
+tap "homebrew/services"
+
+# --- Shared: both accounts ----------------------------------------------------
+brew "chezmoi"   # dotfiles manager
+brew "gh"        # GitHub CLI
+brew "htop"      # process viewer
+brew "uv"        # Python packages, venvs, and Python versions
+brew "cmake"     # C/C++ build system
+brew "llvm", link: true   # clang, clang-tidy, etc.
+brew "lld"       # LLVM linker
+
+# --- Needed by the work account -----------------------------------------------
+# Homebrew has one owner, so these are installed machine-wide; only work uses them.
+brew "ffmpeg"    # audio/video conversion
+brew "poppler"   # PDF tools (pdftotext, pdftoppm, ...)
+cask "libreoffice"             # office documents; headless conversion via `soffice`
+cask "session-manager-plugin"  # AWS CLI plugin for SSM sessions
