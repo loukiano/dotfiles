@@ -9,6 +9,7 @@
 	last = log -1 HEAD
 	unstage = reset HEAD --
 	cob = checkout -b
-{{- if eq .profile "work" }}
-# Work-only git settings go here (e.g. a signing key, or url rewrites for the company's host).
-{{- end }}
+# Account-local git settings (not in this repo), e.g. work signing key or url rewrites.
+# Included last, so anything in it overrides the settings above.
+[include]
+	path = ~/.gitconfig.local

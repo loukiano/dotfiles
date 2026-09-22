@@ -29,6 +29,10 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
+# --- Account-local additions (not in this repo) ------------------------------
+# e.g. work-only env vars and aliases, managed by the private work repo.
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
+
 # --- mise (runtime versions) -------------------------------------------------
 # Last on purpose: tools mise manages take priority over anything above.
 if [[ -x "$HOME/.local/bin/mise" ]]; then

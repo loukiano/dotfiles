@@ -52,6 +52,8 @@ Special files (never copied to your home folder):
 
 ## Rules
 
-- **Public repo: no secrets.** No keys, tokens, IPs, or work hostnames. SSH hosts for specific machines go in
-  `~/.ssh/config.local` (untracked, pulled in by `Include`).
+- **Public repo: no secrets.** No keys, tokens, IPs, or work hostnames.
+- **Account-specific extras live outside this repo** in `*.local` files, which the tracked files pull in if present:
+  `~/.zshrc.local`, `~/.gitconfig.local`, `~/.ssh/config.local`. The work account manages its versions from a
+  separate private repo.
 - Global tool versions live in `dot_config/mise/config.toml`; projects pin their own in `mise.toml`.
