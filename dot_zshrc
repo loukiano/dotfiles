@@ -11,7 +11,7 @@ if [[ -x /opt/homebrew/bin/brew ]] && ! command -v brew >/dev/null; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 # Per-user tools (chezmoi, mise) install into ~/.local/bin.
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/Applications:$HOME/.local/bin:$PATH"
 
 # --- oh-my-zsh ---------------------------------------------------------------
 export ZSH="$HOME/.oh-my-zsh"

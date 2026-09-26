@@ -5,8 +5,6 @@
 # Rule: only tools either account would install on a fresh Mac. Language runtimes
 # (node, go, python) come from mise/uv per account instead.
 
-tap "homebrew/services"
-
 # --- Shared: both accounts ----------------------------------------------------
 brew "chezmoi"   # dotfiles manager
 brew "gh"        # GitHub CLI
