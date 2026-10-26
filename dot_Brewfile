@@ -13,6 +13,7 @@ brew "uv"        # Python packages, venvs, and Python versions
 brew "cmake"     # C/C++ build system
 brew "llvm", link: true   # clang, clang-tidy, etc.
 brew "lld"       # LLVM linker
+cask "orbstack"  # lightweight docker
 
 # --- Needed by the work account -----------------------------------------------
 # Homebrew has one owner, so these are installed machine-wide; only work uses them.
