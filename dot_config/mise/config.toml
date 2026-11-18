@@ -3,5 +3,10 @@
 # Add tools with `mise use -g <tool>@<version>`, then `chezmoi re-add` to save here.
 
 [tools]
+node = "24"
+uv = "latest"
+
+[settings]
+idiomatic_version_file_enable_tools = ["node"]
 # node = "lts"      # uncomment when moving off nvm
 # uv = "latest"     # Python: mise installs uv; uv manages Python versions + venvs
