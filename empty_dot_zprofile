@@ -1,1 +1,4 @@
 eval "$(~/.local/bin/mise activate zsh --shims)"
+
+# account-specific additions (managed by a private repo, if any)
+[ -f ~/.zprofile.local ] && . ~/.zprofile.local
