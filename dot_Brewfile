@@ -3,13 +3,12 @@
 # Removing a line here does NOT uninstall anything; it just stops new machines getting it.
 #
 # Rule: only tools either account would install on a fresh Mac. Language runtimes
-# (node, go, python) come from mise/uv per account instead.
+# (node, go, python, uv) come from mise per account instead.
 
 # --- Shared: both accounts ----------------------------------------------------
 brew "chezmoi"   # dotfiles manager
 brew "gh"        # GitHub CLI
 brew "htop"      # process viewer
-brew "uv"        # Python packages, venvs, and Python versions
 brew "cmake"     # C/C++ build system
 brew "llvm", link: true   # clang, clang-tidy, etc.
 brew "lld"       # LLVM linker
